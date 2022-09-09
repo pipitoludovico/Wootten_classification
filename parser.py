@@ -61,16 +61,17 @@ class Parser:
             self.dataframe = self.dataframe[self.dataframe[2] > 35]
             # print("")
             self.dataframe.reset_index(drop=True, inplace=True)
-            print(self.dataframe)
+            # print(self.dataframe)
             return self.dataframe
 
         except:
             print("\nvdW table is empty")
 
-    def readHBLS(self, file=None):
+    def readHBSS(self, file=None):
         try:
             self.dataframe = pd.read_csv(file, sep="\t", skiprows=2, header=None)
             self.dataframe[2] = self.dataframe[2].apply(lambda x: x * 100)
+            self.dataframe[0] = self.dataframe[0].str.replace("A:", "")
             self.dataframe[1] = self.dataframe[1].str.replace("C:", "")
             self.dataframe[1] = self.dataframe[1].str.replace("B:", "")
 
@@ -87,6 +88,7 @@ class Parser:
         try:
             self.dataframe = pd.read_csv(file, sep="\t", skiprows=2, header=None)
             self.dataframe[2] = self.dataframe[2].apply(lambda x: x * 100)
+            self.dataframe[0] = self.dataframe[0].str.replace("A:", "")
             self.dataframe[1] = self.dataframe[1].str.replace("C:", "")
             self.dataframe[1] = self.dataframe[1].str.replace("B:", "")
 
