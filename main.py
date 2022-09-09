@@ -3,9 +3,13 @@ import sys, os, pathlib
 cwd = os.getcwd()
 script_dir = os.path.dirname(__file__)
 
-pathVDW = "vdw_resfrequencies.tsv"
-pathSS = "hbss_resfrequencies.tsv"
-pathSB = "hbsb_resfrequencies.tsv"
+os.system("tr -s ' ' < vdw_resfrequencies.tsv | tr '\t' ' ' > vdw.tsv")
+os.system("tr -s ' ' < hbss_resfrequencies.tsv | tr '\t' ' ' > ss.tsv")
+os.system("tr -s ' ' < hbsb_resfrequencies.tsv | tr '\t' ' ' > sb.tsv")
+
+pathVDW = "vdw.tsv"
+pathSS = "ss.tsv"
+pathSB = "sb.tsv"
 
 VDW_abs_file_path = os.path.join(script_dir, pathVDW)
 SS_abs_file_path = os.path.join(script_dir, pathSS)
