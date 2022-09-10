@@ -54,9 +54,8 @@ class Parser:
         try:
             self.dataframe = pd.read_csv(file, sep=" ", skiprows=2, header=None)
             self.dataframe[2] = self.dataframe[2].apply(lambda x: x * 100)
-            self.dataframe[0] = self.dataframe[0].str.replace("A:", "")
-            self.dataframe[1] = self.dataframe[1].str.replace("C:", "")
-            self.dataframe[1] = self.dataframe[1].str.replace("B:", "")
+            self.dataframe[0] = self.dataframe[0].str.split(":")
+            self.dataframe[0] = self.dataframe[0].str[1] + " " + self.dataframe[0].str[2]
 
             self.dataframe = self.dataframe[self.dataframe[2] > 35]
             # print("")
@@ -71,14 +70,13 @@ class Parser:
         try:
             self.dataframe = pd.read_csv(file, sep=" ", skiprows=2, header=None)
             self.dataframe[2] = self.dataframe[2].apply(lambda x: x * 100)
-            self.dataframe[0] = self.dataframe[0].str.replace("A:", "")
-            self.dataframe[1] = self.dataframe[1].str.replace("C:", "")
-            self.dataframe[1] = self.dataframe[1].str.replace("B:", "")
+            self.dataframe[0] = self.dataframe[0].str.split(":")
+            self.dataframe[0] = self.dataframe[0].str[1] + " " + self.dataframe[0].str[2]
 
             self.dataframe = self.dataframe[self.dataframe[2] > 15]
             # print("")
-            # print(self.dataframe)
             self.dataframe.reset_index(drop=True, inplace=True)
+            # print(self.dataframe)
             return self.dataframe
 
         except:
@@ -88,14 +86,14 @@ class Parser:
         try:
             self.dataframe = pd.read_csv(file, sep=" ", skiprows=2, header=None)
             self.dataframe[2] = self.dataframe[2].apply(lambda x: x * 100)
-            self.dataframe[0] = self.dataframe[0].str.replace("A:", "")
-            self.dataframe[1] = self.dataframe[1].str.replace("C:", "")
-            self.dataframe[1] = self.dataframe[1].str.replace("B:", "")
+            self.dataframe[0] = self.dataframe[0].str.split(":")
+            self.dataframe[0] = self.dataframe[0].str[1] + " " + self.dataframe[0].str[2]
+            self.dataframe = self.dataframe[self.dataframe[2] > 15]
 
             self.dataframe = self.dataframe[self.dataframe[2] > 15]
-            # print(self.dataframe)
+            # print("")
             self.dataframe.reset_index(drop=True, inplace=True)
-
+            # print(self.dataframe)
             return self.dataframe
 
         except:
