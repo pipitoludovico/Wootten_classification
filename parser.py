@@ -59,7 +59,6 @@ class Parser:
 
             self.dataframe = self.dataframe[self.dataframe[2] > 35]
             self.dataframe.reset_index(drop=True, inplace=True)
-            self.dataframe.sort_values(by=[1])
             return self.dataframe
 
         except:
@@ -74,7 +73,6 @@ class Parser:
 
             self.dataframe = self.dataframe[self.dataframe[2] > 15]
             self.dataframe.reset_index(drop=True, inplace=True)
-            self.dataframe.sort_values(by=[1])
             return self.dataframe
 
         except:
@@ -88,7 +86,6 @@ class Parser:
             self.dataframe[0] = self.dataframe[0].str[1] + " " + self.dataframe[0].str[2]
             self.dataframe = self.dataframe[self.dataframe[2] > 15]
             self.dataframe.reset_index(drop=True, inplace=True)
-            self.dataframe.sort_values(by=[1])
             return self.dataframe
 
         except:

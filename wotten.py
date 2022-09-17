@@ -30,6 +30,7 @@ class Wotten:
 
 
                 print("\nWoottened DF:")
+                self.dataframe.sort_values(2, ascending=False, inplace=True)
                 print(self.dataframe)
             except:
                 print("\nParsed empty dataframe:")
