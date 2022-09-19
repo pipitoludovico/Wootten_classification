@@ -1,3 +1,5 @@
+import sys
+
 from parser import *
 
 
@@ -7,30 +9,50 @@ class Wotten:
         try:
             self.check = dataframe.copy(deep=True)
             try:
-                self.dataframe = dataframe
-                k = 0
-                if self.dataframe[1].str.contains("B:").any() and self.dataframe[1].str.contains("C:").any():
-                    for i in self.dataframe.itertuples():
-                        if int(str(i[2]).split(":")[2]) in (self.wootten_dict.keys()) and (i[2]).split(":")[0] == "C":
-                            self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2] + " (" + self.wootten_dict[int(str(i[2].split(":")[2]))] + ")"
-                        elif int(str(i[2]).split(":")[2]) not in (self.wootten_dict.keys()) and (i[2]).split(":")[0] == "C":
-                            self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2] + " (ECD)"
-                        else:
-                            self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2]
-                        k += 1
-                if self.dataframe[1].str.contains("B:").any():
-                    for i in self.dataframe.itertuples():
-                        if int(str(i[2]).split(":")[2]) in (self.wootten_dict.keys()) and (i[2]).split(":")[0] == "B":
-                            self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2] + " (" + self.wootten_dict[int(str(i[2].split(":")[2]))] + ")"
-                        elif int(str(i[2]).split(":")[2]) not in (self.wootten_dict.keys()) and (i[2]).split(":")[0] == "B":
-                            self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2] + " (ECD)"
-                        else:
-                            self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2]
-                        k += 1
-
+                if len(sys.argv) == 1:
+                    self.dataframe = dataframe
+                    k = 0
+                    if self.dataframe[1].str.contains("B:").any() and self.dataframe[1].str.contains("C:").any():
+                        for i in self.dataframe.itertuples():
+                            if int(str(i[2]).split(":")[2]) in (self.wootten_dict.keys()) and (i[2]).split(":")[
+                                0] == "C":
+                                self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2] + " (" + \
+                                                             self.wootten_dict[int(str(i[2].split(":")[2]))] + ")"
+                            elif int(str(i[2]).split(":")[2]) not in (self.wootten_dict.keys()) and (i[2]).split(":")[
+                                0] == "C":
+                                self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2] + " (ECD)"
+                            else:
+                                self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2]
+                            k += 1
+                    if self.dataframe[1].str.contains("B:").any():
+                        for i in self.dataframe.itertuples():
+                            if int(str(i[2]).split(":")[2]) in (self.wootten_dict.keys()) and (i[2]).split(":")[
+                                0] == "B":
+                                self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2] + " (" + \
+                                                             self.wootten_dict[int(str(i[2].split(":")[2]))] + ")"
+                            elif int(str(i[2]).split(":")[2]) not in (self.wootten_dict.keys()) and (i[2]).split(":")[
+                                0] == "B":
+                                self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2] + " (ECD)"
+                            else:
+                                self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2]
+                            k += 1
+                if len(sys.argv) == 2:
+                    self.dataframe = dataframe
+                    k = 0
+                    if self.dataframe[1].str.contains(str(sys.argv[1])).any():
+                        for i in self.dataframe.itertuples():
+                            if int(str(i[2]).split(":")[2]) in (self.wootten_dict.keys()) and (i[2]).split(":")[0] == (
+                            sys.argv[1]):
+                                self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2] + " (" + \
+                                                             self.wootten_dict[int(str(i[2].split(":")[2]))] + ")"
+                            elif int(str(i[2]).split(":")[2]) not in (self.wootten_dict.keys()) and (i[2]).split(":")[
+                                0] == (sys.argv[1]):
+                                self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2] + " (ECD)"
+                            else:
+                                self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2]
+                            k += 1
 
                 print("\nWoottened DF:")
-                self.dataframe.sort_values(2, ascending=False, inplace=True)
                 print(self.dataframe)
             except:
                 print("\nParsed empty dataframe:")

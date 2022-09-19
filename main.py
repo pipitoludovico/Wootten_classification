@@ -4,8 +4,20 @@ cwd = os.getcwd()
 script_dir = os.path.dirname(__file__)
 
 os.system("tr -s ' ' < vdw_resfrequencies.tsv | tr '\t' ' ' > vdw.tsv")
+os.system("sed -i 's/HSP/HIS/g' vdw.tsv")
+os.system("sed -i 's/HSE/HIS/g' vdw.tsv")
+os.system("sed -i 's/HSD/HIS/g' vdw.tsv")
+
+
 os.system("tr -s ' ' < hbss_resfrequencies.tsv | tr '\t' ' ' > ss.tsv")
+os.system("sed -i 's/HSP/HIS/g' ss.tsv")
+os.system("sed -i 's/HSE/HIS/g' ss.tsv")
+os.system("sed -i 's/HSD/HIS/g' ss.tsv")
+
 os.system("tr -s ' ' < hbsb_resfrequencies.tsv | tr '\t' ' ' > sb.tsv")
+os.system("sed -i 's/HSP/HIS/g' sb.tsv")
+os.system("sed -i 's/HSE/HIS/g' sb.tsv")
+os.system("sed -i 's/HSD/HIS/g' sb.tsv")
 
 pathVDW = "vdw.tsv"
 pathSS = "ss.tsv"
