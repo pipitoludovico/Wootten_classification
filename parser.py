@@ -54,12 +54,12 @@ class Parser:
         try:
             self.dataframe = pd.read_csv(file, sep=" ", comment='#', header=None)
             self.dataframe[2] = self.dataframe[2].apply(lambda x: x * 100)
-            self.dataframe[0] = self.dataframe[0].str.split(":")
-            self.dataframe[0] = self.dataframe[0].str[1] + " " + self.dataframe[0].str[2]
 
             self.dataframe = self.dataframe[self.dataframe[2] > 35]
             self.dataframe.reset_index(drop=True, inplace=True)
             self.dataframe.sort_values(by=[1])
+            print("VDW DF:")
+            print(self.dataframe)
             return self.dataframe
 
         except:
@@ -69,12 +69,12 @@ class Parser:
         try:
             self.dataframe = pd.read_csv(file, sep=" ", comment="#", header=None)
             self.dataframe[2] = self.dataframe[2].apply(lambda x: x * 100)
-            self.dataframe[0] = self.dataframe[0].str.split(":")
-            self.dataframe[0] = self.dataframe[0].str[1] + " " + self.dataframe[0].str[2]
 
             self.dataframe = self.dataframe[self.dataframe[2] > 15]
             self.dataframe.reset_index(drop=True, inplace=True)
             self.dataframe.sort_values(by=[1])
+            print("HBSS DF:")
+            print(self.dataframe)
             return self.dataframe
 
         except:
@@ -84,11 +84,11 @@ class Parser:
         try:
             self.dataframe = pd.read_csv(file, sep=" ", comment="#", header=None)
             self.dataframe[2] = self.dataframe[2].apply(lambda x: x * 100)
-            self.dataframe[0] = self.dataframe[0].str.split(":")
-            self.dataframe[0] = self.dataframe[0].str[1] + " " + self.dataframe[0].str[2]
             self.dataframe = self.dataframe[self.dataframe[2] > 15]
             self.dataframe.reset_index(drop=True, inplace=True)
             self.dataframe.sort_values(by=[1])
+            print("HBSB DF:")
+            print(self.dataframe)
             return self.dataframe
 
         except:

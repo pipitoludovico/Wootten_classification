@@ -1,4 +1,7 @@
-import sys, os, pathlib
+import os
+import pathlib
+
+from wotten import *
 
 cwd = os.getcwd()
 script_dir = os.path.dirname(__file__)
@@ -7,7 +10,6 @@ os.system("tr -s ' ' < vdw_resfrequencies.tsv | tr '\t' ' ' > vdw.tsv")
 os.system("sed -i 's/HSP/HIS/g' vdw.tsv")
 os.system("sed -i 's/HSE/HIS/g' vdw.tsv")
 os.system("sed -i 's/HSD/HIS/g' vdw.tsv")
-
 
 os.system("tr -s ' ' < hbss_resfrequencies.tsv | tr '\t' ' ' > ss.tsv")
 os.system("sed -i 's/HSP/HIS/g' ss.tsv")
@@ -26,8 +28,6 @@ pathSB = "sb.tsv"
 VDW_abs_file_path = os.path.join(script_dir, pathVDW)
 SS_abs_file_path = os.path.join(script_dir, pathSS)
 SB_abs_file_path = os.path.join(script_dir, pathSB)
-
-from wotten import *
 
 
 def main():

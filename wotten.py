@@ -1,63 +1,44 @@
+import argparse
 import sys
 
 from parser import *
+
+ap = argparse.ArgumentParser()
+ap.add_argument('-r', '--receptor', nargs='*', required=True,
+                help=' use -r and add all the chain IDs that belong to the receptor e.g. -r A B C D E F')
+ap.add_argument('-l', '--ligand', nargs='*', required=True,
+                help='use -l and add all the chain IDs that belong to the ligand e.g. -l G')
+args = ap.parse_args()
 
 
 class Wotten:
     def __init__(self, dataframe):
         self.wootten_dict = Parser.wootten
-        try:
-            self.check = dataframe.copy(deep=True)
+        self.check = dataframe.copy(deep=True)
+        if sys.argv is not None:
             try:
-                if len(sys.argv) == 1:
-                    self.dataframe = dataframe
-                    k = 0
-                    if self.dataframe[1].str.contains("B:").any() and self.dataframe[1].str.contains("C:").any():
-                        for i in self.dataframe.itertuples():
-                            if int(str(i[2]).split(":")[2]) in (self.wootten_dict.keys()) and (i[2]).split(":")[
-                                0] == "C":
-                                self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2] + " (" + \
-                                                             self.wootten_dict[int(str(i[2].split(":")[2]))] + ")"
-                            elif int(str(i[2]).split(":")[2]) not in (self.wootten_dict.keys()) and (i[2]).split(":")[
-                                0] == "C":
-                                self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2] + " (ECD)"
-                            else:
-                                self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2]
-                            k += 1
-                    if self.dataframe[1].str.contains("B:").any():
-                        for i in self.dataframe.itertuples():
-                            if int(str(i[2]).split(":")[2]) in (self.wootten_dict.keys()) and (i[2]).split(":")[
-                                0] == "B":
-                                self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2] + " (" + \
-                                                             self.wootten_dict[int(str(i[2].split(":")[2]))] + ")"
-                            elif int(str(i[2]).split(":")[2]) not in (self.wootten_dict.keys()) and (i[2]).split(":")[
-                                0] == "B":
-                                self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2] + " (ECD)"
-                            else:
-                                self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2]
-                            k += 1
-                if len(sys.argv) == 2:
-                    self.dataframe = dataframe
-                    k = 0
-                    if self.dataframe[1].str.contains(str(sys.argv[1])).any():
-                        for i in self.dataframe.itertuples():
-                            if int(str(i[2]).split(":")[2]) in (self.wootten_dict.keys()) and (i[2]).split(":")[0] == (
-                            sys.argv[1]):
-                                self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2] + " (" + \
-                                                             self.wootten_dict[int(str(i[2].split(":")[2]))] + ")"
-                            elif int(str(i[2]).split(":")[2]) not in (self.wootten_dict.keys()) and (i[2]).split(":")[
-                                0] == (sys.argv[1]):
-                                self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2] + " (ECD)"
-                            else:
-                                self.dataframe.loc[k, [1]] = i[2].split(":")[1] + " " + i[2].split(":")[2]
-                            k += 1
+                self.dataframe = dataframe
+                for idx, row in enumerate(self.dataframe.iterrows()):
+                    chainID_0 = self.dataframe.loc[idx].str.split(':')[0][0]
+                    resname_0 = self.dataframe.loc[idx].str.split(':')[0][1]
+                    resnum_0 = int(self.dataframe.loc[idx].str.split(':')[0][2])
 
-                print("\nWoottened DF:")
+                    chainID_1 = self.dataframe.loc[idx].str.split(':')[1][0]
+                    resname_1 = self.dataframe.loc[idx].str.split(':')[1][1]
+                    resnum_1 = int(self.dataframe.loc[idx].str.split(':')[1][2])
+                    if chainID_0 in args.receptor:
+                        if resnum_0 in self.wootten_dict.keys():
+                            self.dataframe.loc[idx, [0]] = resname_0 + " " + str(resnum_0) + " " + self.wootten_dict[
+                                resnum_0]
+                        elif resnum_0 not in self.wootten_dict.keys():
+                            self.dataframe.loc[idx, [0]] = resname_0 + " " + str(resnum_0) + " REC"
+                    if chainID_0 in args.ligand:
+                        self.dataframe.loc[idx, [1]] = resname_1 + " " + str(resnum_1) + " LIG"
+                    if chainID_1 in args.ligand:
+                        self.dataframe.loc[idx, [1]] = resname_1 + " " + str(resnum_1) + " LIG"
                 print(self.dataframe)
             except:
-                print("\nParsed empty dataframe:")
-        except:
-            print("See warning below:")
+                print("Empy dataframe, check that your chain selection was set properly")
 
     def getExcel(self):
         return self.dataframe
