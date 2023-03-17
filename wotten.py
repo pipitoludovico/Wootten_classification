@@ -31,11 +31,11 @@ class Wotten:
                             self.dataframe.loc[idx, [0]] = resname_0 + " " + str(resnum_0) + " " + self.wootten_dict[
                                 resnum_0]
                         elif resnum_0 not in self.wootten_dict.keys():
-                            self.dataframe.loc[idx, [0]] = resname_0 + " " + str(resnum_0) + " REC"
+                            self.dataframe.loc[idx, [0]] = resname_0 + " " + str(resnum_0) + " ECD"
                     if chainID_0 in args.ligand:
-                        self.dataframe.loc[idx, [1]] = resname_1 + " " + str(resnum_1) + " LIG"
+                        self.dataframe.loc[idx, [1]] = resname_1 + " " + str(resnum_1)
                     if chainID_1 in args.ligand:
-                        self.dataframe.loc[idx, [1]] = resname_1 + " " + str(resnum_1) + " LIG"
+                        self.dataframe.loc[idx, [1]] = resname_1 + " " + str(resnum_1)
                 print(self.dataframe)
             except:
                 print("Empy dataframe, check that your chain selection was set properly")
